@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Ticket Bill Calculator</title>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif; 
+            background-color: #1b1b1b;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .calculator {
+            background: #292929;
+            padding: 30px;
+            border-radius: 10px;
+            width: 400px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.6);
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-top: 15px;
+            font-weight: 500;
+        }
+        select, input {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border-radius: 5px;
+            border: none;
+            background: #444;
+            color: #fff;  
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            margin-top: 20px;
+            background-color: #ff4500;
+            border: none;
+            border-radius: 5px;
+            color: #fff;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #e03e00;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #333;
+            border-radius: 5px;
+            line-height: 1.6;
+        }
+        .result p {
+            margin: 8px 0;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="calculator">
+        <h1>Movie Ticket Bill Calculator</h1>
+
+        <label for="movieType">Select Movie Type:</label>
+        <select id="movieType">
+            <option value="150">Standard - ₹150</option>
+            <option value="200">3D - ₹200</option>
+            <option value="300">IMAX - ₹300</option>
+        </select>
+
+        <label for="seatType">Select Seat Type:</label>
+        <select id="seatType">
+            <option value="0">Regular - No Extra Charge</option>
+            <option value="50">Premium - Extra ₹50</option>
+            <option value="100">VIP - Extra ₹100</option>
+        </select>
+
+        <label for="tickets">Number of Tickets:</label>
+        <input type="number" id="tickets" placeholder="Enter ticket quantity" min="1">
+
+        <button onclick="calculateBill()">Calculate Bill</button>
+
+        <div class="result" id="result"></div>
+    </div>
+
+    <script>
+        function calculateBill() {
+            const movieType = parseFloat(document.getElementById('movieType').value);
+            const seatType = parseFloat(document.getElementById('seatType').value);
+            const tickets = parseInt(document.getElementById('tickets').value);
+            const taxRate = 0.18;
+
+            if (isNaN(tickets) || tickets <= 0) {
+                alert('Please enter a valid number of tickets.');
+                return;
+            }
+
+            const baseCost = (movieType + seatType) * tickets;
+            const tax = baseCost * taxRate;
+            const totalCost = baseCost + tax;
+
+            document.getElementById('result').innerHTML = `
+                <h3>Bill Breakdown:</h3>
+                <p>Movie Type Cost: ₹${movieType} x ${tickets} = ₹${movieType * tickets}</p>
+                <p>Seat Type Extra: ₹${seatType} x ${tickets} = ₹${seatType * tickets}</p>
+                <p>Tax (18%): ₹${tax.toFixed(2)}</p>
+                <h3>Total Bill: ₹${totalCost.toFixed(2)}</h3>
+            `;
+        }
+    </script>
+
+</body>
+</html>
